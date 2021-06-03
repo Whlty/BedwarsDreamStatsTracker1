@@ -4,19 +4,23 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X_UA-Compatible" contents="ie=edge">
-    <link rel="stylesheet" href="/static/styles.css">
+    <link rel="stylesheet" href="{{url_for('static',filename='styles.css')}}">
     <title>Contents</title>
 </head>
 <body>
     <table>
         <tr>
-            <th>Wins</th>
-            <th>Losses </th>
+            <th>Total Wins</th>
+            <th>Total Losses </th>
+            <th>Win/Loss Ratio</th>
+            <th>Current Winstreak</th>
         </tr>
         {% for item in results %}
         <tr>
             <td>{{ item[0] }}</td>
             <td>{{ item[1] }}</td>
+            <td>{{ item[2] }}</td>
+            <td>{{ item[3] }}</td>
         </tr>
         {% endfor %}
     </table>
