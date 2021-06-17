@@ -7,13 +7,22 @@
     <link rel="stylesheet" href="{{url_for('static',filename='styles.css')}}">
     <title>Contents</title>
 </head>
+<div class="topnav">
+	<a href="data">stats</a>
+	<a href="friend">add friend</a>
+	<a href="friends">friends</a>
+	<a href="/">back</a>
+</div>
+
 <body>
+    <h1>Stats for {{ player }} for Lucky</h1>
     <table>
         <tr>
+            <th>Gamer</th>
             <th>Total Wins</th>
-            <th>Total Losses </th>
-            <th>Win/Loss Ratio</th>
-            <th>Current Winstreak</th>
+            <th>Total Kills </th>
+            <th>Total Final Kills</th>
+            <th>Total Bed Breaks</th>
         </tr>
         {% for item in results %}
         <tr>
@@ -21,9 +30,11 @@
             <td>{{ item[1] }}</td>
             <td>{{ item[2] }}</td>
             <td>{{ item[3] }}</td>
+            <td>{{ item[4] }}</td>
         </tr>
         {% endfor %}
     </table>
+
 
 
 </body>
