@@ -15,7 +15,7 @@
 </div>
 
 <body>
-    <h1>Stats for {{ player }} for Lucky</h1>
+    <h1>Stats for {{ player }} and their friends for Lucky</h1>
     <table>
         <tr>
             <th>Gamer</th>
@@ -34,18 +34,5 @@
         </tr>
         {% endfor %}
     </table>
-
-    <h1>
-        {% with messages = get_flashed_messages() %}
-          {% if messages %}
-            <ul class=flashes>
-            {% for message in messages %}
-              <li>{{ message }}</li>
-            {% endfor %}
-            </ul>
-          {% endif %}
-        {% endwith %}
-        </h1>
-
 </body>
 </html>
