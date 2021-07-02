@@ -15,11 +15,12 @@
 </div>
 
 <body>
-    <h1>Stats for {{ player }} and their friends for Lucky</h1>
+    <h1>Stats for {{ player }} and their friends for Lucky 4's</h1>
     <table>
         <tr>
             <th>Gamer</th>
             <th>Total Wins</th>
+            <th>Total Losses</th>
             <th>Total Kills </th>
             <th>Total Final Kills</th>
             <th>Total Bed Breaks</th>
@@ -31,6 +32,7 @@
             <td>{{ item[2] }}</td>
             <td>{{ item[3] }}</td>
             <td>{{ item[4] }}</td>
+            <td>{{ item[5] }}</td>
         </tr>
         {% endfor %}
     </table>
