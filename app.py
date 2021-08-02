@@ -1,3 +1,4 @@
+
 #import rando garbo
 from flask import Flask,render_template,g,request,redirect,flash
 import requests
@@ -21,8 +22,8 @@ def get_db():
 @app.route("/data")
 def lucky():
     #stats display for one user
-    # 
-    #     cursor = get_db().cursor()
+    
+    cursor = get_db().cursor()
     sql = "SELECT name,wins,losses,kills,final_kills,bed_breaks FROM user WHERE uuid='" +uuid+ "'" #add more data
     cursor.execute(sql)
     results = cursor.fetchall()
@@ -55,7 +56,7 @@ def disfriends():
         return render_template("test.html", results=results, player = player,uuid = uuid)
     #if user has no friends
     except:
-        flash("You have no friends L")
+        flash("You have no Friends L")
         return redirect("/data")
 
 @app.route('/')
@@ -97,7 +98,7 @@ def datastuff2():
                 name = str(player)
             #if the user hasn't played the gamemode
             except:
-                flash("user has not played lucky bedwars or Api is down")
+                flash("User has not Played Lucky Bedwars or Api is Down")
                 return render_template("home.html")
 
             cursor = get_db().cursor()
@@ -124,7 +125,7 @@ def datastuff2():
             return redirect("/data")
         #if api is down    
         except:
-            flash("Can't update because Api is down")
+            flash("Can't Update because Api is Down")
             return redirect("/data")
     else:
         print("you're stupid")
@@ -144,7 +145,7 @@ def addfriend():
             y = requests.get("https://api.mojang.com/users/profiles/minecraft/"+friend).json()
             requests.get("https://api.hypixel.net/player?key=e84267a6-e22c-4f9d-8e5d-7e162e6dc79b&uuid="+y["id"]).json()   
         except:
-            flash("User doesn't exist or Api is down")
+            flash("User doesn't Exist or Api is Down")
             return render_template("friend.html")
 
         data = requests.get("https://api.mojang.com/users/profiles/minecraft/"+friend).json()
@@ -154,12 +155,12 @@ def addfriend():
         try:
             data1["player"]["stats"]["Bedwars"]["four_four_lucky_wins_bedwars"]
         except:
-            flash("they have not played lucky bedwars")
+            flash("They have not Played Lucky Bedwars")
             return render_template("friend.html")
 
         #add more data
         #gets friends data
-        flash("friend added")
+        flash("Friend Added")
         f_uuid = str(data["id"])
         wins = int(data1["player"]["stats"]["Bedwars"]["four_four_lucky_wins_bedwars"])
         kills = int(data1["player"]["stats"]["Bedwars"]["four_four_lucky_kills_bedwars"])
@@ -202,6 +203,12 @@ def addfriend():
         u_id = str(cursor.fetchone())
         u_id = re.sub('[^0-9]', '', u_id)
         
+
+        friendc1 = "SELECT user_id from friends where user_id= '"+u_id+"' AND  friend_id= '"+f_id+"'"
+        cursor.execute(friendc1)
+        cfriend = cursor.fetchall()
+
+        print(cfriend)
         #inserting friend into friends table
         cursor.execute("INSERT INTO friends (user_id,friend_id) VALUES (?,?)",(u_id,f_id))
 
