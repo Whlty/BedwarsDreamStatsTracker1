@@ -1,4 +1,3 @@
-
 #import rando garbo
 from flask import Flask,render_template,g,request,redirect,flash
 import requests
@@ -12,7 +11,12 @@ app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
 key = "e84267a6-e22c-4f9d-8e5d-7e162e6dc79b"
 DATABASE = 'luckybw.db'
 
-
+global click_num
+click_num = 1
+global order
+order = "name"
+global ADEC
+ADEC = "ASC"
 def get_db():
     db = getattr(g, '_database', None)
     if db is None:
@@ -33,6 +37,8 @@ def lucky():
 @app.route("/friends")
 def disfriends():
     try:
+        global order
+        global ADEC
         cursor = get_db().cursor()
         #gets the users id
         sql = "SELECT id FROM user WHERE uuid='" +uuid+ "'"
@@ -50,7 +56,7 @@ def disfriends():
         allfriends = allfriends[:-1]
 
         #displays all users friends
-        s_friend = "SELECT name,wins,losses,kills,final_kills,bed_breaks from user WHERE id in ("+allfriends+","+u_id+")"#add more data
+        s_friend = "SELECT name,wins,losses,kills,final_kills,bed_breaks from user WHERE id in ("+allfriends+","+u_id+") ORDER BY "+order+" "+ADEC+""#add more data
         cursor.execute(s_friend)
         results = cursor.fetchall()
         return render_template("test.html", results=results, player = player,uuid = uuid)
@@ -58,6 +64,32 @@ def disfriends():
     except:
         flash("You have no Friends L")
         return redirect("/data")
+
+@app.route('/my-link/')
+def my_link():
+    global order
+    global click_num
+    global ADEC
+    click_num = click_num +1
+    if click_num == 2:
+        order = "wins"
+        ADEC = "DESC"
+        flash("Sorted by Wins")
+    elif click_num == 3:
+        order = "kills"
+        flash("Sorted by Kills")
+    elif click_num == 4:
+        order = "final_kills"
+        flash("Sorted by Final Kills")
+    elif click_num == 5:
+        order = "bed_breaks"
+        flash("Sorted by Bed Breaks")
+    else:
+        click_num = 1
+        order = "name"
+        ADEC = "ASC"
+        flash("Sorted by Name")
+    return redirect("/friends")
 
 @app.route('/')
 def datastuff():
